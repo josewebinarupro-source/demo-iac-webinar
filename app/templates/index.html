@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestor de Tareas - Demo IaC</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1e2761; color: white; padding: 30px; }
+        h1 { color: #00d4ff; text-align: center; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .form-add { background: #ffffff20; padding: 20px; border-radius: 10px; margin-bottom: 20px; display: flex; gap: 10px; }
+        .form-add input { flex: 1; padding: 10px; border-radius: 6px; border: none; font-size: 1em; }
+        .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-add { background: #00d4ff; color: #1e2761; }
+        .btn-complete { background: #00ff88; color: #1e2761; }
+        .btn-delete { background: #ff4444; color: white; }
+        .tarea { background: #ffffff20; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+        .tarea.completada { opacity: 0.5; text-decoration: line-through; }
+        .acciones { display: flex; gap: 10px; }
+        .subtitulo { text-align: center; color: #aaa; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Gestor de Tareas</h1>
+        <p class="subtitulo">Demo IaC — Webinar Transformación Digital Bloque 3</p>
+
+        <div class="form-add">
+            <form method="POST" action="/add" style="display:flex;flex:1;gap:10px">
+                <input type="text" name="titulo" placeholder="✍️ Nueva tarea..." required>
+                <button class="btn btn-add" type="submit">➕ Añadir</button>
+            </form>
+        </div>
+
+        {% for tarea in tareas %}
+        <div class="tarea {% if tarea[2] %}completada{% endif %}">
+            <span>{{ tarea[1] }}</span>
+            <div class="acciones">
+                <a href="/complete/{{ tarea[0] }}"><button class="btn btn-complete">✅</button></a>
+                <a href="/delete/{{ tarea[0] }}"><button class="btn btn-delete">🗑️</button></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

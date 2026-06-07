@@ -1,3 +1,4 @@
+cat > main.tf << 'EOF'
 terraform {
   required_providers {
     docker = {
@@ -8,6 +9,10 @@ terraform {
 }
 
 provider "docker" {}
+
+resource "docker_network" "webinar_net" {
+  name = "webinar-network"
+}
 
 resource "docker_image" "nginx" {
   name = "nginx:latest"
@@ -21,8 +26,11 @@ resource "docker_container" "web" {
     external = 8080
   }
   volumes {
-    host_path      = "/home/joseac/demo-webinar-upro/demo-iac/html"
+    host_path      = "/home/joseac/demo-iac-webinar/html"
     container_path = "/usr/share/nginx/html"
+  }
+  networks_advanced {
+    name = docker_network.webinar_net.name
   }
 }
 
@@ -41,6 +49,34 @@ resource "docker_container" "db" {
     internal = 5432
     external = 5432
   }
+  networks_advanced {
+    name = docker_network.webinar_net.name
+  }
+}
+
+resource "docker_image" "app" {
+  name = "webinar-app:latest"
+  build {
+    context = "/home/joseac/demo-iac-webinar/app"
+  }
+}
+
+resource "docker_container" "app" {
+  name  = "webinar-app"
+  image = docker_image.app.image_id
+  env = [
+    "DB_HOST=webinar-db",
+    "DB_NAME=demodb",
+    "DB_USER=postgres",
+    "DB_PASS=webinar2026"
+  ]
+  ports {
+    internal = 5000
+    external = 5000
+  }
+  networks_advanced {
+    name = docker_network.webinar_net.name
+  }
 }
 
 resource "docker_image" "pgadmin" {
@@ -57,6 +93,9 @@ resource "docker_container" "pgadmin" {
   ports {
     internal = 80
     external = 8081
+  }
+  networks_advanced {
+    name = docker_network.webinar_net.name
   }
 }
 
@@ -83,4 +122,8 @@ resource "docker_container" "portainer" {
     volume_name    = docker_volume.portainer_data.name
     container_path = "/data"
   }
+  networks_advanced {
+    name = docker_network.webinar_net.name
+  }
 }
+EOF

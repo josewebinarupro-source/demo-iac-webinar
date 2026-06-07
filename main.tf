@@ -25,7 +25,7 @@ resource "docker_container" "web" {
     external = 8080
   }
   volumes {
-    host_path      = "/home/joseac/demo-iac-webinar/html"
+    host_path      = "${var.base_path}/html"
     container_path = "/usr/share/nginx/html"
   }
   networks_advanced {
@@ -56,7 +56,7 @@ resource "docker_container" "db" {
 resource "docker_image" "app" {
   name = "webinar-app:latest"
   build {
-    context = "/home/joseac/demo-iac-webinar/app"
+    context = "${var.base_path}/app"
   }
 }
 

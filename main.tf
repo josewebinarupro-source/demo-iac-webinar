@@ -71,7 +71,7 @@ resource "docker_container" "app" {
   ]
   ports {
     internal = 5000
-    external = 5000
+    external = var.app_port
   }
   networks_advanced {
     name = docker_network.webinar_net.name

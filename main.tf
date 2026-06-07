@@ -1,4 +1,3 @@
-cat > main.tf << 'EOF'
 terraform {
   required_providers {
     docker = {
@@ -126,4 +125,3 @@ resource "docker_container" "portainer" {
     name = docker_network.webinar_net.name
   }
 }
-EOF

@@ -6,27 +6,55 @@
     <style>
         body { font-family: Arial, sans-serif; background: #1e2761; color: white; text-align: center; padding: 50px; }
         h1 { font-size: 3em; color: #00d4ff; }
-        h2 { font-size: 1.5em; color: #fff; }
-        .card { background: #ffffff20; border-radius: 10px; padding: 20px; margin: 20px auto; max-width: 600px; }
-        .verde { color: #00ff88; font-size: 1.2em; }
+        h2 { font-size: 1.5em; color: #fff; margin-bottom: 40px; }
+        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
+        .card { background: #ffffff20; border-radius: 12px; padding: 30px 40px; width: 200px; text-decoration: none; color: white; transition: 0.3s; cursor: pointer; }
+        .card:hover { background: #ffffff40; transform: scale(1.05); }
+        .card .icon { font-size: 3em; }
+        .card .titulo { font-size: 1.1em; font-weight: bold; margin-top: 10px; }
+        .card .desc { font-size: 0.85em; color: #aaa; margin-top: 5px; }
+        .footer { margin-top: 50px; color: #aaa; font-size: 0.85em; }
     </style>
+    <script>
+        function getUrl(port) {
+            const host = window.location.hostname;
+            const protocol = window.location.protocol;
+            if (host.includes('killercoda')) {
+                const base = host.replace(/-\d+\.spch/, '-' + port + '.spch');
+                return protocol + '//' + base;
+            }
+            return protocol + '//' + window.location.hostname + ':' + port;
+        }
+        window.onload = function() {
+            document.getElementById('link-app').href = getUrl(5000);
+            document.getElementById('link-pgadmin').href = getUrl(8081);
+            document.getElementById('link-portainer').href = getUrl(9000);
+        }
+    </script>
 </head>
 <body>
-    <h1>🚀 Infraestructura como Código (IaC)</h1>
-    <h2>Webinar Transformación Digital en Ingeniería Informática</h2>
-    <h3>Módulo 2: Herramientas y Tecnologías para la Transformación Digital</h3>
-    <h3>Bloque 3: Soluciones en la Nube para el Almacenamiento y Gestión de Datos</h3>
-    <div class="card">
-        <p class="verde">✅ Servidor Web Nginx — corriendo</p>
-        <p class="verde">✅ Base de datos PostgreSQL — corriendo</p>
-        <p class="verde">✅ pgAdmin — corriendo en :8081</p>
+    <h1>🚀 Demo IaC — Terraform + Docker</h1>
+    <h2>Webinar Transformación Digital · Bloque 3</h2>
+    <div class="grid">
+        <a class="card" id="link-app" target="_blank">
+            <div class="icon">📋</div>
+            <div class="titulo">App Tareas</div>
+            <div class="desc">Python + Flask + PostgreSQL</div>
+        </a>
+        <a class="card" id="link-pgadmin" target="_blank">
+            <div class="icon">🗄️</div>
+            <div class="titulo">pgAdmin</div>
+            <div class="desc">Gestión base de datos</div>
+        </a>
+        <a class="card" id="link-portainer" target="_blank">
+            <div class="icon">🐳</div>
+            <div class="titulo">Portainer</div>
+            <div class="desc">Panel Docker</div>
+        </a>
     </div>
-    <div class="card">
-        <p>Todo desplegado con <strong>Terraform</strong> en segundos</p>
-        <p>Un archivo. Un comando. Toda la infraestructura.</p>
-        <br>
-        <a class="btn" href="http://localhost:8081" target="_blank">🗄️ Abrir pgAdmin</a>
+    <div class="footer">
+        <p>Todo desplegado con <strong>Terraform</strong> · Un archivo · Un comando · Toda la infraestructura</p>
+        <p>🔗 github.com/josewebinarupro-source/demo-iac-webinar</p>
     </div>
 </body>
 </html>
-Guarda con Ctrl+O →
